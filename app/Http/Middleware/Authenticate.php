@@ -14,6 +14,7 @@ class Authenticate extends Middleware
      */
     protected function redirectTo($request)
     {
+      //Valida que el usuario este autenticado, en caso de que no ,se redirige a la ventana de login
         if (! $request->expectsJson()) {
             return route('login');
         }
