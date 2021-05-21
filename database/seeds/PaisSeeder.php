@@ -251,7 +251,8 @@ class PaisSeeder extends Seeder
                 ['codigo'=>'YUG', 'nombre'=>'Yugoslavia', 'continente'=>'Europe'],
                 ['codigo'=>'ZAF', 'nombre'=>'South Africa', 'continente'=>'Africa'],
                 ['codigo'=>'ZMB', 'nombre'=>'Zambia', 'continente'=>'Africa'],
-                ['codigo'=>'ZWE', 'nombre'=>'Zimbabwe', 'continente'=>'Africa']
+                ['codigo'=>'ZWE', 'nombre'=>'Zimbabwe', 'continente'=>'Africa'],
+                ['codigo'=>'NA', 'nombre'=>'No Aplica', 'continente'=>'No Aplica'],
         ];
 
         foreach ($paises as $pais) {

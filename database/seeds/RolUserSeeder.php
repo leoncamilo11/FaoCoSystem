@@ -12,7 +12,13 @@ class RolUserSeeder extends Seeder
     public function run()
     {
         //
-        $faker = Faker\Factory::create();
+
+        DB::table('role_users')->insert(array(
+          'role_id' => 1,
+          'user_id' => 1,
+          'activo' => 1));
+
+        /**$faker = Faker\Factory::create();
 
         $arrayR = DB::table('roles')->select('id')->get();
         $arrayU = DB::table('users')->select('id')->get();
@@ -35,11 +41,11 @@ class RolUserSeeder extends Seeder
         }
 
         for ($i=0; $i < 70; $i++) {
-          DB::table('rol_users')->insert(array(
-            'rol_id' => $faker->randomElement($valoresR),
+          DB::table('role_users')->insert(array(
+            'role_id' => $faker->randomElement($valoresR),
             'user_id' => $faker->randomElement($valoresU),
             'activo' => $faker->randomElement([1,2]))
           );
-        }
+        }*/
     }
 }

@@ -29,7 +29,8 @@ class RolSeeder extends Seeder
                 ['role'=>'Finanzas'],
                 ['role'=>'Comunicaciones'],
                 ['role'=>'Seguridad'],
-                ['role'=>'Sistemas']
+                ['role'=>'Sistemas'],
+                ['role'=>'No aplica']
         ];
 
         foreach ($roles as $rol) {

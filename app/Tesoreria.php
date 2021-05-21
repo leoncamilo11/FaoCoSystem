@@ -11,7 +11,7 @@ class Tesoreria extends Model
     protected $fillable = [
         'fechaFactura', 'proveedor_id', 'responsable_id',
         'tipoPago_id', 'valorFactura', 'valorIva',
-        'valorImpoconsumo', 'detalles'
+        'valorImpoconsumo', 'detalles', 'adjunto'
     ];
 
     public function proveedore()
@@ -21,11 +21,16 @@ class Tesoreria extends Model
 
     public function responsable()
     {
-      return $this->belongsTo('App\User');
+      return $this->belongsTo('App\User', 'responsable_id');
     }
 
     public function tipoPago()
     {
       return $this->belongsTo('App\TipoPago', 'tipoPago_id');
+    }
+
+    public function proyecto()
+    {
+      return $this->belongsTo('App\Proyecto', 'proyecto_id');
     }
 }

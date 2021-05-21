@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', 'Auth\LoginController@showLoginForm');
 Route::post('login', 'Auth\LoginController@login')->name('login');
 Route::post('logout', 'Auth\LoginController@logout')->name('logout');
+Route::post('/ajax-sesion', 'Auth\LoginController@setSession')->name('ajax')->middleware('auth');
 
 //Rutas del Sistema
 Route::group(['middleware'=>['auth']], function(){

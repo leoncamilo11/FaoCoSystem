@@ -4330,7 +4330,8 @@ class CiudadSeeder extends Seeder
           ['nombre'=>'Otra', 'distrito'=>'Otra', 'pais_id'=>'236'],
           ['nombre'=>'Otra', 'distrito'=>'Otra', 'pais_id'=>'237'],
           ['nombre'=>'Otra', 'distrito'=>'Otra', 'pais_id'=>'238'],
-          ['nombre'=>'Otra', 'distrito'=>'Otra', 'pais_id'=>'239']
+          ['nombre'=>'Otra', 'distrito'=>'Otra', 'pais_id'=>'239'],
+          ['nombre'=>'NA', 'distrito'=>'No Aplica', 'pais_id'=>'240']
         ];
 
         foreach ($ciudades as $ciudad) {

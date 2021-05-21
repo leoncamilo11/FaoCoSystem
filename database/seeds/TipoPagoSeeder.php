@@ -28,7 +28,8 @@ class TipoPagoSeeder extends Seeder
                       ['tipoPago'=>'Solicitud Viaje'],
                       ['tipoPago'=>'Cuenta Cobro'],
                       ['tipoPago'=>'Legalización Anticipos'],
-                      ['tipoPago'=>'Honorarios']
+                      ['tipoPago'=>'Honorarios'],
+                      ['tipoPago'=>'No Aplica']
                     ];
           foreach ($tipoPagos as $tipoPago) {
             DB::table('tipo_pagos')->insert([$tipoPago]);

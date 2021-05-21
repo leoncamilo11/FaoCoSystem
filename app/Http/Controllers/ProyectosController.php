@@ -17,7 +17,7 @@ class ProyectosController extends Controller
     public function index()
     {
         //
-        $proyectos=Proyecto::all();
+        $proyectos=Proyecto::paginate(15);
         return view("proyectos.index", compact("proyectos"));
     }
 

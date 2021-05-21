@@ -17,6 +17,7 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string('nombre');
             $table->string('apellido');
+            $table->string('index');
             $table->foreignId('tipoDocumento_id')->references('id')->on('tipo_documentos');
             $table->string('documento');
             $table->string('email')->unique();

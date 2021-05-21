@@ -17,7 +17,8 @@ class EstadoSeeder extends Seeder
                 ['estado'=>'Enviado'],
                 ['estado'=>'Pendiente Recibido'],
                 ['estado'=>'Recibido'],
-                ['estado'=>'Entregado']
+                ['estado'=>'Entregado'],
+                ['estado'=>'No Aplica']
         ];
 
         foreach ($estados as $estado) {

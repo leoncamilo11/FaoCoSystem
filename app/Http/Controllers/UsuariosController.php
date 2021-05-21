@@ -20,8 +20,11 @@ class UsuariosController extends Controller
     public function index()
     {
         //
-        $usuarios=User::all();
-        return view("usuarios.index", compact("usuarios"));
+        $usuarios=User::paginate(15);
+        $roles=Role::with('users')->get();
+        //dd($roles);
+        //return($roles);
+      return view("usuarios.index", compact("usuarios"));
 
     }
 
@@ -34,9 +37,9 @@ class UsuariosController extends Controller
     {
         //
         $tipoDocumentos=TipoDocumento::all();
-        //$roles=Role::all();
+        $roles=Role::all();
         $entidades=Entidade::all();
-        return view('usuarios.create', compact('tipoDocumentos'/*, 'roles'*/, 'entidades'));
+        return view('usuarios.create', compact('tipoDocumentos', 'roles', 'entidades'));
     }
 
     /**
@@ -51,32 +54,43 @@ class UsuariosController extends Controller
         $usuario = $this->validate(request(),[
           'nombre'=>'required|string',
           'apellido'=>'required|string',
+          'index'=>'required|string',
           'tipoDocumento_id'=>'required',
           'documento'=>'required|string',
           'email'=>'email|required|string',
           'password'=>'required|string',
           'telefono'=>'required|string',
-          'entidad_id'=>'required'
+          'entidad_id'=>'required|integer',
+          'role_id'=>'required|array'
         ]);
 
+        //Forma simplificada por laravel
+        //Se crea el usuario con los campos de la tabla
+        //$usuario = User::create($request->all());
+        //se relacionan los roles que se escogen para el usuario
+        //$usuario->roles()->sync($request->role_id);
+
+        //Forma manual de crear un objeto en la base de datos
+        //Se crea el usuario con los campos de la tabla
         $usuario = new User;
         $usuario->nombre=$request->nombre;
         $usuario->apellido=$request->apellido;
+        $usuario->index=$request->index;
         $usuario->tipoDocumento_id=$request->tipoDocumento_id;
-        //$usuario->tipoDocumento=$request->tipoDocumento;
         $usuario->documento=$request->documento;
         $usuario->email=$request->email;
         $usuario->email_verified_at=now();
         $usuario->password=bcrypt($request->password);
-        //$usuario->role_id=$request->role_id;
         $usuario->telefono=$request->telefono;
         $usuario->entidad_id=$request->entidad_id;
         //$usuario->activo=1;
         //$usuario->area_id=$request->area_id;
         $usuario->save();
 
+        //se relacionan los roles que se escogen para el usuario
+        $usuario->roles()->sync($request->role_id);
 
-        return redirect('/usuarios');
+        return redirect('/usuarios')->with('mesage', 'Usuario creado');
     }
 
     /**
@@ -103,8 +117,9 @@ class UsuariosController extends Controller
         //
         $tipoDocumentos=TipoDocumento::all();
         $entidades=Entidade::all();
+        $roles=Role::all();
         $usuario=User::findorFail($id);
-        return view("usuarios.edit", compact('usuario', 'tipoDocumentos', 'entidades'));
+        return view("usuarios.edit", compact('usuario', 'tipoDocumentos', 'entidades', 'roles'));
     }
 
     /**
@@ -118,13 +133,13 @@ class UsuariosController extends Controller
     {
       //
       $usuario = $this->validate(request(),[
-        'nombre'=>'required|string',
-        'apellido'=>'required|string',
-        'tipoDocumento_id'=>'required',
-        'documento'=>'required|string',
+        //'nombre'=>'required|string',
+        //'apellido'=>'required|string',
+        //'tipoDocumento_id'=>'required',
+        //'documento'=>'required|string',
         'email'=>'email|required|string',
-        //'password'=>'required|string',
-        //'role_id'=>'required',
+        'password'=>'required|string',
+        'role_id'=>'required',
         'telefono'=>'required|string',
         'entidade_id'=>'required'
         //'area_id'=>'required'
@@ -134,6 +149,13 @@ class UsuariosController extends Controller
 
       $usuario=User::findorFail($id);
       $usuario->update($request->all());
+      $usuario->update([
+          'email' => $request->email,
+          'password' => bcrypt($request->password),
+          'telefono' => $request->telefono,
+          'entidade_id' => $request->entidad_id
+      ]);
+      $usuario->roles()->sync($request->role_id);
       return redirect("/usuarios");
     }
 

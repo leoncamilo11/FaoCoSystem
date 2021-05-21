@@ -19,6 +19,7 @@ class CreateProveedoresTable extends Migration
             $table->foreignId('tipoDocumento_id')->references('id')->on('tipo_documentos');
             $table->string('documento');
             $table->integer('noChequeo')->nullable();
+            $table->string('supplier')->nullable();
             $table->boolean('activo');
             $table->timestamps();
             $table->softDeletes();

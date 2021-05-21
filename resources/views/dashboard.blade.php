@@ -16,7 +16,8 @@
           <h4>Sistema de Gestion FAO Colombia</h4>
         </div>
         <div class="card-body">
-          <p class="card-text">Sistema de gestión para procesos de correspondencia y salas para la organización de las naciones unidas para la alimentación y la agricultura</p>
+          <p class="card-text">Sistema de gestión que permite el proceso de correspondencia y salas para la organización de las naciones unidas FAO</p>
+          {{session()->get("rol_nombre")}}
         </div>
       </div>
     </div>

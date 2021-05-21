@@ -22,7 +22,8 @@ class AreaSeeder extends Seeder
                 ['area'=>'Seguridad'],
                 ['area'=>'Sistemas'],
                 ['area'=>'Recursos Humanos'],
-                ['area'=>'Proyectos']
+                ['area'=>'Proyectos'],
+                ['area'=>'No Aplica']
         ];
 
         foreach ($areas as $area) {

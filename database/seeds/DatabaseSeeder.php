@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
         $this->call(RolSeeder::class);
         $this->call(TipoPagoSeeder::class);
         $this->call(EstadoSeeder::class);
-        $this->call(ProveedorSeeder::class);
+        //$this->call(ProveedorSeeder::class);
         $this->call(PaisSeeder::class);
         $this->call(CiudadSeeder::class);
         $this->call(AreaSeeder::class);
@@ -27,9 +27,9 @@ class DatabaseSeeder extends Seeder
         $this->call(SedeSeeder::class);
         $this->call(UserSeeder::class);
         $this->call(RolUserSeeder::class);
-        $this->call(ProyectoSeeder::class);
-        $this->call(CorrespondenciaSeeder::class);
-        $this->call(TesoreriaSeeder::class);
+        //$this->call(ProyectoSeeder::class);
+        //$this->call(CorrespondenciaSeeder::class);
+        //$this->call(TesoreriaSeeder::class);
         $this->call(ProyectoUserSeeder::class);
     }
 

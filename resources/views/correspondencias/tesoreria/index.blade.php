@@ -14,8 +14,9 @@
 <hr>
 <nav class="navbar navbar-light float-right">
   <form class="form-inline">
-    <input name="buscarPorConsecutivo" class="form-control mr-sm-2" type="search" placeholder="Buscar por Consecutivo" aria-label="Search">
-    <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Buscar</button>
+    <!--<input name="buscarPorConsecutivo" class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Search">
+    <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Buscar</button>-->
+    <input class="form-control" id="myInput" type="text" placeholder="Buscar..">
   </form>
 </nav>
 <div class="table-responsive">
@@ -23,22 +24,24 @@
   <thead>
     <tr>
       <th scope="col">No.</th>
-      <th scope="col">Consecutivo</th>
+      <th scope="col">No Radicado</th>
       <th scope="col">Proveedor</th>
       <th scope="col">Tipo Persona</th>
       <th scope="col">Nit / CC</th>
-      <th scope="col">Digito Verificación</th>
-      <th scope="col">Responsable</th>
-      <th scope="col">Simbolo Proyecto</th>
+      <th scope="col">Dígito Verificación</th>
+      <th scope="col">Consultor</th>
+      <th scope="col">Símbolo Proyecto</th>
+      <th scope="col">No. Factura</th>
       <th scope="col">Tipo Pago</th>
       <th scope="col">Valor</th>
       <th scope="col">IVA</th>
       <th scope="col">Impoconsumo</th>
-      <th scope="col">Mas Info</th>
+      <th scope="col">Archivo</th>
+      <th scope="col">Más Info</th>
       <th scope="col">Anular</th>
     </tr>
   </thead>
-  <tbody>
+  <tbody id="myTable">
     @if ($tesorerias)
       @foreach($tesorerias as $tesoreria)
         <tr>
@@ -49,11 +52,20 @@
           <td>{{$tesoreria->proveedore->documento}}</td>
           <td>{{$tesoreria->proveedore->noChequeo}}</td>
           <td>{{$tesoreria->responsable->nombre}} {{$tesoreria->responsable->apellido}}</td>
-          <td><!--Simbolo Proyecto--></td>
+          <td>{{$tesoreria->proyecto->simbolo}}</td>
+          <td>{{$tesoreria->noFactura}}</td>
           <td>{{$tesoreria->tipoPago->tipoPago}}</td>
           <td>{{$tesoreria->valorFactura}}</td>
           <td>{{$tesoreria->valorIva}}</td>
           <td>{{$tesoreria->valorImpoconsumo}}</td>
+          <td>
+            @if ($tesoreria->adjunto == "No aplica")
+              <a href="#" target="_blank" class="not-active"><img width="25px" src="/images/icon_x.png"/ disabled></a>
+            @else
+              <a href="{{Storage::url($tesoreria->adjunto)}}" target="_blank"><img width="25px" src="/images/icon_check.png"/></a>
+            @endif
+          </td>
+          <iframe style="display:none" src="{{Storage::url($tesoreria->adjunto)}}" id='frame' width='400' height='400' frameborder='0'></iframe>
           <!--Boton para mas información-->
           <td>
             <!-- Botón en HTML (lanza el modal en Bootstrap) -->
@@ -96,7 +108,7 @@
               </div>
             </div>
           </td>
-          <form action="" method="post">
+          <form action="/correspondencias/tesoreria/{{$tesoreria->id}}" method="post">
             {{csrf_field()}}
             <input type="hidden" name="_method" value="DELETE">
             <td><button type="submit" class="btn btn-danger btn-sm" name="borrar">Anular</button></td>
@@ -107,4 +119,5 @@
   </tbody>
   </table>
 </div>
+{{$tesorerias->links()}}
 @endsection

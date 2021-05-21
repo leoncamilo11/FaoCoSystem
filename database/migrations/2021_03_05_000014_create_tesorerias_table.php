@@ -17,13 +17,16 @@ class CreateTesoreriasTable extends Migration
             $table->id();
             $table->string('consecutivo');
             $table->date('fechaFactura');
+            $table->string('noFactura');
             $table->foreignId('proveedor_id')->index();
             $table->foreignId('responsable_id')->references('id')->on('users');
+            $table->string('proyecto_id')->references('id')->on('proyectos');
             $table->foreignId('tipoPago_id')->references('id')->on('tipo_pagos');
             $table->integer('valorFactura');
             $table->integer('valorIva');
             $table->integer('valorImpoconsumo');
             $table->string('detalles');
+            $table->string('adjunto')->default('No aplica');
             $table->timestamps();
             $table->softDeletes();
         });

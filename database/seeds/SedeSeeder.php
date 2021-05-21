@@ -17,7 +17,8 @@ class SedeSeeder extends Seeder
                 ['sede'=>'Sede2', 'ciudad_id'=>'2', 'area_id'=>'2', 'entidad_id'=>'2', 'direccion'=>'Direccion2', 'detalles'=>'Detalles2'],
                 ['sede'=>'Sede3', 'ciudad_id'=>'3', 'area_id'=>'3', 'entidad_id'=>'3', 'direccion'=>'Direccion3', 'detalles'=>'Detalles3'],
                 ['sede'=>'Sede4', 'ciudad_id'=>'4', 'area_id'=>'4', 'entidad_id'=>'4', 'direccion'=>'Direccion4', 'detalles'=>'Detalles4'],
-                ['sede'=>'Sede5', 'ciudad_id'=>'5', 'area_id'=>'5', 'entidad_id'=>'1', 'direccion'=>'Direccion5', 'detalles'=>'Detalles5']
+                ['sede'=>'Sede5', 'ciudad_id'=>'5', 'area_id'=>'5', 'entidad_id'=>'1', 'direccion'=>'Direccion5', 'detalles'=>'Detalles5'],
+                ['sede'=>'No Aplica', 'ciudad_id'=>'4318', 'area_id'=>'11', 'entidad_id'=>'5', 'direccion'=>'No Aplica', 'detalles'=>'No Aplica']
         ];
 
         foreach ($sedes as $sede) {

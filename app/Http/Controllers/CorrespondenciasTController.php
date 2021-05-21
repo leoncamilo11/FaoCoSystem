@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use App\Tesoreria;
 use App\User;
 use App\Proveedore;
@@ -26,7 +27,7 @@ class CorrespondenciasTController extends Controller
             $tesorerias=Tesoreria::all()->where('consecutivo', 'like', $consecutivo);
           //  dd($tesorerias);
         } else {
-          $tesorerias=Tesoreria::all();
+          $tesorerias=Tesoreria::paginate(15);
         }
         //dd($tesorerias);
         return view("correspondencias/tesoreria/index", compact("tesorerias"));
@@ -82,26 +83,47 @@ class CorrespondenciasTController extends Controller
     {
         //
         $tesoreria = $this->validate(request(),[
-          'proveedor_id'=>'required',
-          'proyecto_id'=>'required',
-          'tipoPago_id'=>'required',
+          'proveedor_id'=>'required|integer',
+          'proyecto_id'=>'required|integer',
+          'tipoPago_id'=>'required|integer',
           'fechaFactura'=>'required',
           'valorFactura'=>'required',
           'valorIva'=>'required',
-          'valorImpoconsumo'=>'required'
+          'valorImpoconsumo'=>'required',
+          'noFactura'=>'required|string'
         ]);
+
 
         $tesoreria = new Tesoreria;
         $tesoreria->consecutivo=$request->consecutivo;
         $tesoreria->proveedor_id=$request->proveedor_id;
         $tesoreria->fechaFactura=$request->fechaFactura;
+        $tesoreria->noFactura=$request->noFactura;
         $tesoreria->responsable_id=$request->responsable_id;
+        $tesoreria->proyecto_id=$request->proyecto_id;
         $tesoreria->tipoPago_id=$request->tipoPago_id;
         $tesoreria->valorFactura=$request->valorFactura;
         $tesoreria->valorIva=$request->valorIva;
         $tesoreria->valorImpoconsumo=$request->valorImpoconsumo;
         $tesoreria->detalles=$request->detalle;
+
+        /**if ($request->hasFile('adjunto')) {
+          $adjunto = $request->file('adjunto');
+          $nombre = "pdf_".$request->consecutivo.".".$adjunto->guessExtension();
+          $ruta = public_path("storage/tesoreria/".$nombre);
+          if ($adjunto->guessExtension() == "pdf") {
+            //copy($adjunto, $ruta);
+            $tesoreria->adjunto=$request->file('adjunto')->store('public/tesoreria');
+          }else{
+            dd("NO ES UN PDF");
+          }
+        }**/
+
+        if ($request->hasFile('adjunto')) {
+          $tesoreria->adjunto=$request->file('adjunto')->store('public/tesoreria');
+        }
         $tesoreria->save();
+
 
 
         return redirect('/correspondencias/tesoreria');
@@ -150,12 +172,15 @@ class CorrespondenciasTController extends Controller
     public function destroy($id)
     {
         //
+        $tesoreria=Tesoreria::findorFail($id);
+        $tesoreria->delete();
+        return redirect("/correspondencias/tesoreria");
     }
 
     public function getInfoProveedor($id)
     {
         return Proveedore::join('tipo_documentos',  'tipo_documentos.id', '=', 'proveedores.tipoDocumento_id')
-                          ->select('tipo_documentos.codigo', 'proveedores.documento', 'proveedores.noChequeo')
+                          ->select('tipo_documentos.codigo', 'proveedores.documento', 'proveedores.noChequeo', 'proveedores.supplier', 'proveedores.tipoDocumento_id')
                           ->where('proveedores.id', '=', $id)
                           ->get();
     }

@@ -19,8 +19,8 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'nombre', 'apellido', 'tipoDocumento_id',
-        'documento', 'email', 'password',
-        'telefono', 'entidad_id'
+        'index', 'documento', 'email',
+        'password', 'telefono', 'entidad_id'
     ];
 
     /**
@@ -53,6 +53,11 @@ class User extends Authenticatable
 
     public function proyectos()
     {
-      return $this->belongsToMany('App\Proyecto');
+      return $this->belongsToMany('App\Proyecto', 'proyecto_users');
+    }
+
+    public function roles()
+    {
+      return $this->belongsToMany('App\Role', 'role_users')->withPivot('activo');
     }
 }

@@ -17,9 +17,9 @@ class CreateProyectosTable extends Migration
             $table->id();
             $table->string('simbolo');
             $table->string('actividad');
-            $table->foreignId('administrativo_id')->references('id')->on('users');
-            $table->foreignId('financiero_id')->references('id')->on('users');
-            $table->foreignId('coordinador_id')->references('id')->on('users');
+            $table->foreignId('administrativo_id')->references('id')->on('users')->nullable();
+            $table->foreignId('financiero_id')->references('id')->on('users')->nullable();
+            $table->foreignId('coordinador_id')->references('id')->on('users')->nullable();
             $table->boolean('activo');
             $table->timestamps();
             $table->softDeletes();

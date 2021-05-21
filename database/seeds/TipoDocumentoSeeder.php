@@ -18,7 +18,8 @@ class TipoDocumentoSeeder extends Seeder
                 ['codigo'=>'PA', 'tipoDocumento'=>'Pasaporte'],
                 ['codigo'=>'RC', 'tipoDocumento'=>'Registro Civil'],
                 ['codigo'=>'TI', 'tipoDocumento'=>'Tarjeta de Identidad'],
-                ['codigo'=>'NIT', 'tipoDocumento'=>'Número de Identificación Tributaria']
+                ['codigo'=>'NIT', 'tipoDocumento'=>'Número de Identificación Tributaria'],
+                ['codigo'=>'NA', 'tipoDocumento'=>'No Aplica']
         ];
 
         foreach ($tipoDocumentos as $tipoDocumento) {

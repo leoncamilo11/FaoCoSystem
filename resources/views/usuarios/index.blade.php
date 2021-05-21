@@ -19,7 +19,8 @@
         <th scope="col">No.</th>
         <th scope="col">Nombres</th>
         <th scope="col">Apellidos</th>
-        <th scope="col">Tipo Documento</th>
+        <th scope="col">Index</th>
+        <th scope="col">Tipo</th>
         <th scope="col">Documento</th>
         <th scope="col">Correo</th>
         <!--Traer Roles-->
@@ -27,27 +28,28 @@
         <th scope="col">Telefono</th>
         <!--Traer Entidad-->
         <th scope="col">Info Entidad</th>
-        <th scope="col">Creado</th>
-        <th scope="col">Actualizado</th>
+        <!--<th scope="col">Creado</th>
+        <th scope="col">Actualizado</th>-->
         <th scope="col">Editar</th>
         <th scope="col">Borrar</th>
       </tr>
     </thead>
     <tbody>
       @if ($usuarios)
-        @foreach($usuarios as $usuario)
+        @foreach ($usuarios as $usuario)
           <tr>
             <th scope="row">{{$usuario->id}}</th>
             <td>{{$usuario->nombre}}</td>
             <td>{{$usuario->apellido}}</td>
+            <td>{{$usuario->index}}</td>
             <td>{{$usuario->tipoDocumento->codigo}}</td>
             <td>{{$usuario->documento}}</td>
             <td>{{$usuario->email}}</td>
+            <!--Traer Roles-->
             <td>
-              <!-- Botón en HTML (lanza el modal en Bootstrap) -->
-              <a href="#ModalRolesUsuario" role="button" class="btn btn-large btn-primary" data-toggle="modal">Ver Roles</a>
-
-              <!-- Modal / Ventana / Overlay en HTML -->
+              <!-- Botón en HTML (lanza el modal en Bootstrap)
+              <a href="#ModalRolesUsuario" role="button" class="btn btn-large btn-primary" data-toggle="modal">Ver</a>-->
+              <!--Modal / Ventana / Overlay en HTML
               <div id="ModalRolesUsuario" class="modal fade">
                 <div class="modal-dialog">
                   <div class="modal-content">
@@ -56,25 +58,24 @@
                       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     </div>
                     <div class="modal-body">
-                      <ul>
-                        <li>Rol</li>
-                        <li>Rol</li>
-                        <li>Rol</li>
-                      </ul>
+                      <ul>-->
+                        @foreach ($usuario->roles as $role)
+                          <li style="list-style:none;">{{$role->role}}</li>
+                        @endforeach
+                      <!-- </ul>
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                     </div>
                   </div>
                 </div>
-              </div>
+              </div>-->
             </td>
-            <!--Traer Roles-->
             <td>{{$usuario->telefono}}</td>
             <!--Traer Entidad-->
             <td>
               <!-- Botón en HTML (lanza el modal en Bootstrap) -->
-              <a href="#ModalEntidadUsuario" role="button" class="btn btn-large btn-primary" data-toggle="modal">Info Entidad</a>
+              <a href="#ModalEntidadUsuario" role="button" class="btn btn-large btn-primary" data-toggle="modal">Ver</a>
 
               <!-- Modal / Ventana / Overlay en HTML -->
               <div id="ModalEntidadUsuario" class="modal fade">
@@ -98,8 +99,8 @@
                 </div>
               </div>
             </td>
-            <td>{{$usuario->created_at}}</td>
-            <td>{{$usuario->updated_at}}</td>
+            <!--<td>{{$usuario->created_at}}</td>
+            <td>{{$usuario->updated_at}}</td>-->
             <form action="/usuarios/{{$usuario->id}}/edit" method="put">
               {{csrf_field()}}
               <input type="hidden" name="_method" value="EDIT">
@@ -116,4 +117,5 @@
     </tbody>
     </table>
   </div>
+  {{$usuarios->links()}}
 @endsection

@@ -1,17 +1,9 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Sistema Gestion FAOCO</title>
-    <!-- Bootstrap link Js -->
-    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/momentjs/2.14.1/moment.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
     <!-- Bootstrap link CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -91,129 +83,8 @@
       .not-active {
           pointer-events: none;
           cursor: default;
-        }
+      }
     </style>
-    <script type="text/javascript">
-  /**Funciones encargadas de mostrar el campo de lista en base al remitente**/
-      function mostrarRemitente(id) {
-        //Muestra input para colocar el nombre del remitente externo
-        if (id == "1") {
-          $("#remitenteExterno").show();
-          $("#remitenteConsultor").hide();
-          $("#remitenteProveedor").hide();
-        }
-        //Muestra lista desplegables cuando el remitente es un consultor registrado
-        if (id == "2") {
-          $("#remitenteExterno").hide();
-          $("#remitenteConsultor").show();
-          $("#remitenteProveedor").hide();
-        }
-        //Muestra lista desplegable cuando el remitente es un proveedor registrado
-        if (id == "3") {
-          $("#remitenteExterno").hide();
-          $("#remitenteConsultor").hide();
-          $("#remitenteProveedor").show();
-        }
-      }
-
-//PAIS CIUDADES ENVIA FUNCIONES
-/**Funciones encargadas de seleccionar las ciudades en base a los paises en la seccion de envia del modulo de correspondencia general**/
-      //Se encarga de detectar cambios sobre el select de pais envia y llama la funcion onChangeGetCiudadesE
-      $(function() {
-        $('#paisE_id').on('change', onChangeGetCiudadesE);
-      });
-      //Se encarga de devolver los ciudades segun el pais en html
-      function  onChangeGetCiudadesE(){
-        //Se encarga de guardar el id del pais que se encuentra seleccionado
-        var pais = $(this).val();
-        //alert(pais);
-        //Se encarga de llamar al metodo getCiudades dentro del controlador CorrespondenciasGController por medio de una ruta get
-        $.get('/ciudades/' + pais, function(ciudades){
-          //alert(ciudades);
-          //Guarda la line a de codigo por defecto en el select de ciudades
-          var selectHtml = '<option value="" selected disabled>Seleccione Ciudad</option>';
-          //Recorre la cantidad de ciudades recibidas
-          for (var i=0; i<ciudades.length; ++i) {
-            //Asigna las ciudades dentro de la linea de codigo en Html a la variable selectHtml
-            selectHtml += '<option value="' + ciudades[i].id + '">' + ciudades[i].nombre + '</option>';
-          }
-          //Se le pasa por medio del id del select la variable que contiene el array de ciudades
-          $('#ciudadE_id').html(selectHtml);
-        });
-      }
-
-//PAIS CIUDADES RECIBE FUNCIONES
-/**Funciones encargadas de seleccionar las ciudades en base a los paises en la seccion de recibe del modulo de correspondencia general**/
-      //Se encarga de detectar cambios sobre el select de pais recibe y llama la funcion onChangeGetCiudadesR
-      $(function() {
-        $('#paisR_id').on('change', onChangeGetCiudadesR);
-      });
-      //Se encarga de devolver los ciudades segun el pais en html
-      function  onChangeGetCiudadesR(){
-        //Se encarga de guardar el id del pais que se encuentra seleccionado
-        var pais = $(this).val();
-        //alert(pais);
-        //Se encarga de llamar al metodo getCiudades dentro del controlador CorrespondenciasGController por medio de una ruta get
-        $.get('/ciudades/' + pais, function(ciudades){
-          //alert(ciudades);
-          //Guarda la line a de codigo por defecto en el select de ciudades
-          var selectHtml = '<option value="" selected disabled>Seleccione Ciudad</option>';
-          //Recorre la cantidad de ciudades recibidas
-          for (var i=0; i<ciudades.length; ++i) {
-            //Asigna las ciudades dentro de la linea de codigo en Html a la variable selectHtml
-            selectHtml += '<option value="' + ciudades[i].id + '">' + ciudades[i].nombre + '</option>';
-          }
-          //Se le pasa por medio del id del select la variable que contiene el array de ciudades
-          $('#ciudadR_id').html(selectHtml);
-        });
-      }
-
-  //INFO PROVEEDOR RESGISTRO TESORERIA
-    /**Funciones que se encargan de seleccionar los datos deseados por la vista de registro de tesoreria en base al proveedor que se seleccione**/
-      //Se encarga de detectar cambios sobre el select de proveedor y llama la funcion onChangeGetInfoProveedor
-      $(function() {
-        $('#proveedor_id').on('change', onChangeGetInfoProveedor);
-      });
-      //Se encarga de devolver los datos del proveedor segun el proveedor dentro del value
-      function onChangeGetInfoProveedor(){
-        //Se encarga de guardar el id del proveedor que se encuentra seleccionado
-        var proveedor = $(this).val();
-        //alert(proveedor);
-        //Se encarga de llamar al metodo getInfoProveedor dentro del controlador CorrespondenciasTController por medio de una ruta get
-        $.get('/proveedor/' + proveedor, function(proveedor){
-          //Recorre el objeto para ingresar a los arrays con sus atributos
-          for (var i=0; i<proveedor.length; ++i) {
-            //console.log(proveedor[i].tipoDocumento_id);
-            //Asigna dentro del value correspondiente a cada input el valor solicitado
-            $('#tipoPersona').val(proveedor[i].codigo);
-            $('#documento').val(proveedor[i].documento);
-            $('#digito').val(proveedor[i].noChequeo);
-          }
-        });
-      }
-
-    //INFO PROYECTO RESGISTRO TESORERIA
-      /**Funciones que se encargan de seleccionar los datos deseados por la vista de registro de tesoreria en base al proyecto que se seleccione**/
-        //Se encarga de detectar cambios sobre el select de proyectos y llama la funcion onChangeGetInfoProyecto
-        $(function() {
-          $('#proyecto_id').on('change', onChangeGetInfoProyecto);
-        });
-        //Se encarga de devolver los datos del proyecto segun el proyecto dentro del value
-        function onChangeGetInfoProyecto(){
-          //Se encarga de guardar el id del proyecto que se encuentra seleccionado
-          var proyecto = $(this).val();
-          //alert(proyecto);
-          //Se encarga de llamar al metodo getInfoProyecto dentro del controlador CorrespondenciasTController por medio de una ruta get
-          $.get('/proyecto/' + proyecto, function(proyecto){
-            //Recorre el objeto para ingresar a los arrays con sus atributos
-            for (var i=0; i<proyecto.length; ++i) {
-              //console.log(proyecto[i].actividad);
-              //Asigna dentro del value correspondiente a cada input el valor solicitado
-              $('#actividad').val(proyecto[i].actividad);
-            }
-          });
-        }
-    </script>
   </head>
   <body>
     <div class="header">
@@ -232,5 +103,37 @@
       Fao Colombia || Sistema de Gestion Modulos Fao || Derechos Reservados
       @yield("footer")
     </div>
+    <!--Valido la existencia de mas de un rol para mostrar modal para escoder rol-->
+    @if(session()->get("rolesArray") && count(session()->get("rolesArray")) > 1)
+      @csrf
+       <div class="modal fade" id="modal-seleccionar-rol" data-rol-set="{{empty(session()->get("rol_id")) ? 'NO' : 'SI'}}" tabindex="-1" data-backdrop="static" data-keyboard="false">
+           <div class="modal-dialog">
+               <div class="modal-content">
+                   <div class="modal-header">
+                       <h4 class="modal-title">Roles de Usuario</h4>
+                   </div>
+                   <div class="modal-body">
+                       <p>Cuentas con mas de un Rol en la plataforma, a continuación seleccione con cual de ellos desea trabajar</p>
+                       @foreach(session()->get("rolesArray") as $role)
+                           <li>
+                               <a href="#" class="asignar-rol" data-rolid="{{$role['id']}}" data-rolnombre="{{$role["role"]}}" data-rolactivo="{{$role["pivot"]["activo"]}}">
+                                   {{$role["role"]}}
+                                   <?php //print_r($role)   ?>
+                               </a>
+                           </li>
+                       @endforeach
+                   </div>
+               </div>
+           </div>
+       </div>
+    @endif
+    <!-- Bootstrap link Js -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/momentjs/2.14.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
+    <script type="text/javascript" src="/js/funciones.js"></script>
   </body>
 </html>

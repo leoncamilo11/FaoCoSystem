@@ -14,11 +14,12 @@ class ProyectoSeeder extends Seeder
     public function run()
     {
         //
-        $faker = Faker\Factory::create();
+
+        /**$faker = Faker\Factory::create();
         //Se hace la consulta por medio del query builder de laravel con la restriccion por rol
-        $arrayA = DB::table('rol_users')->select('user_id')->where('rol_id', '9')->get();
-        $arrayF = DB::table('rol_users')->select('user_id')->where('rol_id', '10')->get();
-        $arrayC = DB::table('rol_users')->select('user_id')->where('rol_id', '7')->get();
+        $arrayA = DB::table('role_users')->select('user_id')->where('role_id', '9')->get();
+        $arrayF = DB::table('role_users')->select('user_id')->where('role_id', '10')->get();
+        $arrayC = DB::table('role_users')->select('user_id')->where('role_id', '7')->get();
         //Se crea un array para lamacenar los ids que se van a asignar de forma aleatorio por cada rol
         $valoresA = array();
         $valoresF = array();
@@ -43,7 +44,7 @@ class ProyectoSeeder extends Seeder
           // code...
           $valorC = $arrayC[$i]->user_id;
           $valoresC[$i]=$valorC;
-        }
+        }*/
         //dd($administrativo);
         //$ofinanciero = DB::table('rol_users')->select('user_id')->where('rol_id', '10')->get();
         //$ocoordinador = DB::table('rol_users')->select('user_id')->where('rol_id', '7')->get();
@@ -66,7 +67,7 @@ class ProyectoSeeder extends Seeder
         //dd($coordinador);
 
         //Llenado aleatorio de los campos para proyecto
-        for ($i=0; $i < 10; $i++) {
+        /**for ($i=0; $i < 10; $i++) {
           // code...
           DB::table('proyectos')->insert(array(
             'simbolo' => Str::random(5),
@@ -76,6 +77,6 @@ class ProyectoSeeder extends Seeder
             'coordinador_id' => $faker->randomElement($valoresC),
             'activo' => $faker->randomElement([1,2]))
           );
-        }
+        }*/
     }
 }

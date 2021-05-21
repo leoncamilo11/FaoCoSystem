@@ -12,7 +12,7 @@ class ProyectoUserSeeder extends Seeder
     public function run()
     {
         //
-        $faker = Faker\Factory::create();
+        /**$faker = Faker\Factory::create();
 
         $arrayP = DB::table('proyectos')->select('id')->get();
         $arrayU = DB::table('users')->select('id')->get();
@@ -39,6 +39,6 @@ class ProyectoUserSeeder extends Seeder
             'proyecto_id' => $faker->randomElement($valoresP),
             'user_id' => $faker->randomElement($valoresU))
           );
-        }
+        }*/
     }
 }

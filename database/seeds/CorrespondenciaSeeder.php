@@ -14,7 +14,7 @@ class CorrespondenciaSeeder extends Seeder
         //
         $faker = Faker\Factory::create();
 
-        $arrayR = DB::table('rol_users')->select('user_id')->/*where('rol_id', '2')->*/get();
+        $arrayR = DB::table('role_users')->select('user_id')->/*where('rol_id', '2')->*/get();
         $arrayU = DB::table('users')->select('id')->get();
         $arrayEs = DB::table('estados')->select('id')->get();
         $arrayC = DB::table('ciudades')->select('id')->get();
