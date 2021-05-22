@@ -104,6 +104,7 @@ class LoginController extends Controller
   //Cierra lka sesion y redirecciona al login
   public function logout()
   {
+    Session::flush();
     Auth::logout();
     return redirect('/');
   }

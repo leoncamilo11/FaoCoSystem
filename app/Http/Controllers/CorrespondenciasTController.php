@@ -124,8 +124,6 @@ class CorrespondenciasTController extends Controller
         }
         $tesoreria->save();
 
-
-
         return redirect('/correspondencias/tesoreria');
     }
 
