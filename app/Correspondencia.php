@@ -12,19 +12,28 @@ class Correspondencia extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'recepcionistaRegistra_id', 'numeroGuia', 'remitenteE',
-        'remitenteC_id', 'remitenteP_id', 'detalles', 'ciudadE_id',
-        'ciudadR_id', 'estado_id', 'usuarioRecibe_id'
+        'codigoArchivo_id', 'recepcionistaRegistra_id', 'tipoCorrespondencia_id',
+        'usuarioSolicita_id', 'usuarioRecibe_id', 'detalles'
     ];
+
+    public function codigoArchivo()
+    {
+      return $this->belongsTo('App\CodigoArchivo', 'codigoArchivo_id');
+    }
 
     public function recepcionistaRegistra()
     {
       return $this->belongsTo('App\User', 'recepcionistaRegistra_id');
     }
 
-    public function entidad()
+    public function tipoCorrespondencia()
     {
-      return $this->belongsTo('App\Entidade');
+      return $this->belongsTo('App\TipoCorrespondencia', 'tipoCorrespondencia_id');
+    }
+
+    public function usuarioSolicita()
+    {
+      return $this->belongsTo('App\User', 'usuarioSolicita_id');
     }
 
     public function usuarioRecibe()
@@ -32,7 +41,12 @@ class Correspondencia extends Model
       return $this->belongsTo('App\User', 'usuarioRecibe_id');
     }
 
-    public function estado()
+    public function entidadeDestinatario()
+    {
+      return $this->belongsTo('App\Entidade', 'entidadeDestinatario_id');
+    }
+
+    /*public function estado()
     {
       return $this->belongsTo('App\Estado', 'estado_id');
     }
@@ -55,5 +69,5 @@ class Correspondencia extends Model
     public function ciudadR()
     {
       return $this->belongsTo('App\Ciudade', 'ciudadR_id');
-    }
+    }*/
 }

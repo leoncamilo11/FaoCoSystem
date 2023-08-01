@@ -113,7 +113,7 @@
       $(function() {
         $('#proyecto_id').on('change', onChangeGetInfoProyecto);
       });
-      //Se encarga de devolver los datos del proyecto segun el proyecto dentro del value
+      //Se encarga de devolver los datos del proyecto segun el proyecto dentro del variable
       function onChangeGetInfoProyecto(){
         //Se encarga de guardar el id del proyecto que se encuentra seleccionado
         var proyecto = $(this).val();
@@ -128,6 +128,102 @@
           }
         });
       }
+
+//VISTA DE REGISTRO EN CORRESPONDENCIA GENERAL (resources/views/correspondencias/general/create.blade.php)
+//INFO USUARIO SOLICITA
+  /**Funciones que se encargan de seleccionar la entidad en base al usuario seleccionado**/
+    //Se encarga de detectar cambios sobre el select de usuarioSolicita_id y llama la funcion onChangeGetEntidadUS
+    $(function() {
+      $('#usuarioSolicita_id').on('change', onChangeGetEntidadUS);
+    });
+    //Se encarga de devolver el id de la entidad segun el usuario dentro de la variable usuarioSolicita
+    function onChangeGetEntidadUS(){
+      //Se encarga de guardar el id del proyecto que se encuentra seleccionado
+      var usuarioSolicita = $(this).val();
+      //alert(usuarioSolicita);
+      //Se encarga de llamar al metodo getInfoUser dentro del controlador CorrespondenciasGController por medio de una ruta get
+      $.get('/user/' + usuarioSolicita, function(usuarioSolicita){
+        //Recorre el objeto para ingresar a los arrays con sus atributos
+        for (var i=0; i<usuarioSolicita.length; ++i) {
+          //console.log(usuarioSolicita[i].entidad_id);
+          //Se almacena el id de la entidad del usuario
+          var entidadId = usuarioSolicita[i].entidad_id;
+          //alert(entidadId);
+          //Se encarga de llamar al metodo getEntidade dentro del controlador CorrespondenciasGController por medio de una ruta get
+          $.get('/entidade/' + entidadId, function(entidadId){
+            //Recorre el objeto para ingresar a los arrays con sus atributos
+            for (var a=0; a<entidadId.length; ++a) {
+              //Asigna dentro del value correspondiente a cada input el valor solicitado
+              $('#entidadSolicita').val(entidadId[a].entidad);
+              //console.log(entidadId[a].entidad);
+            }
+          });
+        }
+      });
+    }
+
+//VISTA DE REGISTRO EN CORRESPONDENCIA GENERAL (resources/views/correspondencias/general/create.blade.php)
+//INFO USUARIO RECIBE
+  /**Funciones que se encargan de seleccionar la entidad en base al usuario seleccionado**/
+    //Se encarga de detectar cambios sobre el select de usuarioRecibe_id y llama la funcion onChangeGetEntidadUR
+    $(function() {
+      $('#usuarioRecibe_id').on('change', onChangeGetEntidadUR);
+    });
+    //Se encarga de devolver el id de la entidad segun el usuario dentro de la variable usuarioRecibe
+    function onChangeGetEntidadUR(){
+      //Se encarga de guardar el id del proyecto que se encuentra seleccionado
+      var usuarioRecibe = $(this).val();
+      //alert(usuarioRecibe);
+      //Se encarga de llamar al metodo getInfoUser dentro del controlador CorrespondenciasGController por medio de una ruta get
+      $.get('/user/' + usuarioRecibe, function(usuarioRecibe){
+        //Recorre el objeto para ingresar a los arrays con sus atributos
+        for (var i=0; i<usuarioRecibe.length; ++i) {
+          //console.log(usuarioRecibe[i].entidad_id);
+          //Se almacena el id de la entidad del usuario
+          var entidadId = usuarioRecibe[i].entidad_id;
+          //alert(entidadId);
+          //Se encarga de llamar al metodo getEntidade dentro del controlador CorrespondenciasGController por medio de una ruta get
+          $.get('/entidade/' + entidadId, function(entidadId){
+            //Recorre el objeto para ingresar a los arrays con sus atributos
+            for (var a=0; a<entidadId.length; ++a) {
+              //Asigna dentro del value correspondiente a cada input el valor solicitado
+              $('#entidadRecibe').val(entidadId[a].entidad);
+              //console.log(entidadId[a].entidad);
+            }
+          });
+        }
+      });
+    }
+
+
+    /**$(document).ready(function() {
+        $('#codigoArchivo_id').select2();
+    });**/
+
+//VISTA DE REGISTRO EN CORRESPONDENCIA GENERAL (resources/views/correspondencias/general/create.blade.php)
+//GERACION DE CONSECUTIVO
+  /**Funciones que se encargan de generar el conseutivo en base al codigo de archivo seleccionado**/
+    //Se encarga de detectar cambios sobre el select de codigoArchivo_id y llama la funcion onChangeGetConsecutiv
+
+    var select = document.getElementById('codigoArchivo_id');
+    select.addEventListener('change',
+    function(){
+      var selectedOption = this.options[select.selectedIndex];
+      console.log(selectedOption.value + ': ' + selectedOption.text);
+      var codigoArchivoId = selectedOption.value;
+      var codigoArchivo = selectedOption.text;
+
+      var hoy = new Date();
+      var año = hoy.getFullYear();
+      //console.log(año);
+
+      var contador = document.getElementById('consecutivo').value;
+      //alert(contador);
+
+      var consecutivo = codigoArchivo + " - " + año + " - " + contador;
+      //(alert(consecutivo);
+      $('#consecutivo').val(consecutivo);
+    });
 
 // Trabajo con Ventana de Roles.
 // Trabajo con Ventana de Roles.

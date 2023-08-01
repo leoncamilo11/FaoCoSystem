@@ -18,14 +18,14 @@
     <tr>
       <th scope="col">No.</th>
       <th scope="col">Consecutivo</th>
+      <th scope="col">Codigo Archivo</th>
       <th scope="col">Recepcionista Registro</th>
-      <th scope="col">Numero Guia</th>
-      <th scope="col">Remitente</th>
+      <th scope="col">Tipo Documento</th>
+      <th scope="col">Usuario Radica</th>
+      <th scope="col">Entidad</th>
+      <th scope="col">Destinatario</th>
+      <th scope="col">Entidad</th>
       <th scope="col">Detalles</th>
-      <th scope="col">Ciudad Envio</th>
-      <th scope="col">Ciudad Recibido</th>
-      <th scope="col">Estado</th>
-      <th scope="col">Usuario Recibe</th>
       <th scope="col">Creado</th>
       <th scope="col">Actualizado</th>
       <th scope="col">Editar</th>
@@ -38,27 +38,22 @@
         <tr>
           <th scope="row">{{$correspondencia->id}}</th>
           <td>{{$correspondencia->consecutivo}}</td>
+          <td>{{$correspondencia->codigoArchivo->codigoArchivo}}</td>
           <td>{{$correspondencia->recepcionistaRegistra->nombre}}</td>
-          <td>{{$correspondencia->numeroGuia}}</td>
-
-          <!--Condicional-->
-          <td>{{$correspondencia->remitenteE}}</td>
-          <!--<td>{{$correspondencia->remitenteC_id}}</td>
-          <td>{{$correspondencia->remitenteP_id}}</td>-->
-
+          <td>{{$correspondencia->tipoCorrespondencia->tipoCorrespondencia}}</td>
+          <td>{{$correspondencia->usuarioSolicita->nombre}} {{$correspondencia->usuarioSolicita->apellido}}</td>
+          <td>{{$correspondencia->usuarioSolicita->entidade->entidad}}</td>
+          <td>{{$correspondencia->destinatario}}</td>
+          <td>{{$correspondencia->entidadeDestinatario->entidad}}</td>
           <td>{{$correspondencia->detalles}}</td>
-          <td>{{$correspondencia->ciudadE->nombre}}</td>
-          <td>{{$correspondencia->ciudadR->nombre}}</td>
-          <td>{{$correspondencia->estado->estado}}</td>
-          <td>{{$correspondencia->usuarioRecibe->nombre}}</td>
           <td>{{$correspondencia->created_at}}</td>
           <td>{{$correspondencia->updated_at}}</td>
-          <form action="" method="put">
+          <form action="/correspondencias/general/{{$correspondencia->id}}/edit" method="put">
             {{csrf_field()}}
             <input type="hidden" name="_method" value="EDIT">
             <td><button type="submit" class="btn btn-success btn-sm" name="editar">Editar</button></td>
           </form>
-          <form action="" method="post">
+          <form action="/correspondencias/general/{{$correspondencia->id}}" method="post">
             {{csrf_field()}}
             <input type="hidden" name="_method" value="DELETE">
             <td><button type="submit" class="btn btn-danger btn-sm" name="borrar">Borrar</button></td>
@@ -69,4 +64,5 @@
   </tbody>
   </table>
 </div>
+{{$correspondencias->links()}}
 @endsection
